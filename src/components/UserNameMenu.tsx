@@ -1,7 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Separator } from "@radix-ui/react-separator";
-import { CircleUserRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
@@ -11,7 +9,11 @@ const UserNameMenu = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-orange-500 gap-2">
-                <CircleUserRound className="text-orange-500" />
+            <img 
+                src={user?.picture} 
+                alt="User profile" 
+                className="w-8 h-8 rounded-full border-2 border-black"
+            />
                 <div className="flex flex-col items-start">
                     <span className="text-sm">{user?.name}</span>
                     <span className="text-xs text-gray-600">{user?.email}</span>
@@ -23,9 +25,13 @@ const UserNameMenu = () => {
                         User Profile
                     </Link>
                 </DropdownMenuItem>
-                <Separator/>
                 <DropdownMenuItem>
-                    <Button className="w-full font-bold bg-orange-500 text-white" onClick={() => logout()}>
+                    <Link to="/manage-restaurant" className="font-bold hover:text-orange-500 block px-4 py-2 border-b-2 border-b-orange-300 mb-2">
+                        My restaurant
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Button className="w-full font-bold bg-orange-500 text-white " onClick={() => logout()}>
                         Log Out
                     </Button>
                 </DropdownMenuItem>

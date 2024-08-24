@@ -1,4 +1,4 @@
-import { CircleUserRound, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Separator } from "@radix-ui/react-separator";
 import { Button } from "./ui/button";
@@ -16,7 +16,11 @@ const MobileNav = () => {
             <SheetContent className="space-y-3">
                 <SheetTitle>
                     {isAuthenticated ? <span className="flex item-center font-bold gap-2 text-sm md:text-lg">
-                        <CircleUserRound className="text-orange-500"></CircleUserRound>
+                        <img 
+                                src={user?.picture} 
+                                alt="User profile" 
+                                className="w-8 h-8 rounded-full border-2 border-black"
+                            />
                         <div className="flex flex-col items-start">
                             <span className="text-sm">{user?.name}</span>
                             <span className="text-xs text-gray-600">{user?.email}</span>

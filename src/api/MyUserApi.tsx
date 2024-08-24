@@ -47,7 +47,7 @@ export const useCreateMyUser=()=>{
                 "Content-Type":"application/json",
             },
             body:JSON.stringify(user),
-        })
+        }) 
         if(!response.ok){
             throw new Error("failed to create user");
         }
