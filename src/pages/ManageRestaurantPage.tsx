@@ -6,11 +6,14 @@ const ManageRestaurantPage=()=>{
     const {currentRestaurant,isLoading:getIsLoading}=useGetMyRestaurant();
     const {updateRestaurant,isLoading:updateIsLoading}=useUpdateMyRestaurant();
     const isEditing=!!currentRestaurant;
-    if(getIsLoading){
+    if(isEditing&&getIsLoading){
         return <div>loading</div>
     }
-    return <ManageRestaurantForm restaurant={currentRestaurant} onSave={isEditing?updateRestaurant:createRestaurant} isLoading={createIsLoading||updateIsLoading||getIsLoading}></ManageRestaurantForm>
-
+    return <ManageRestaurantForm
+    {...(isEditing && { restaurant: currentRestaurant })}
+    onSave={isEditing ? updateRestaurant : createRestaurant}
+    isLoading={createIsLoading || updateIsLoading}
+/>
 }
 
 export default ManageRestaurantPage;
