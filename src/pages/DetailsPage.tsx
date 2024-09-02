@@ -44,7 +44,7 @@ const DetailsPage = () => {
     const deleteFromCart=(deleteCartItem:CartItem)=>{
         setCartItems((prevCartItems)=>{
             let updatedCartItem;
-            if(deleteCartItem.quantity>0){
+            if(deleteCartItem.quantity>1){
                 updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===deleteCartItem._id?{...cartItem,quantity:cartItem.quantity-1}:cartItem)
                 console.log("clicked");
             }else{
