@@ -9,7 +9,7 @@ type Props={
 }
 
 
-const MenuItemInput=({index,removeMenuItem}:Props)=>{
+const MenuItemInput=({index,removeMenuItem}:Props)=>{ 
     const {control}=useFormContext();
     return (
         <div className="flex flex-row items-end gap-2">
