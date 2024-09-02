@@ -31,8 +31,10 @@ const DetailsPage = () => {
             let updatedCartItem;
             if(existingCartItem){
                 updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===menuItem._id?{...cartItem,quantity:cartItem.quantity++}:cartItem)
+                console.log("clicked");
             }else{
                 updatedCartItem=[...prevCartItems,{_id:menuItem._id,name:menuItem.name,price:menuItem.price,quantity:1}]
+                console.log("clicked");
             }
             sessionStorage.setItem(`cartItems-${restaurantId}`,JSON.stringify(updatedCartItem));
             return updatedCartItem;
@@ -44,8 +46,10 @@ const DetailsPage = () => {
             let updatedCartItem;
             if(deleteCartItem.quantity>0){
                 updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===deleteCartItem._id?{...cartItem,quantity:cartItem.quantity--}:cartItem)
+                console.log("clicked");
             }else{
                 updatedCartItem=prevCartItems.filter((cartItem)=>cartItem._id!==deleteCartItem._id)
+                console.log("clicked");
             }
             sessionStorage.setItem(`cartItems-${restaurantId}`,JSON.stringify(updatedCartItem));
             return updatedCartItem;
