@@ -30,7 +30,7 @@ const DetailsPage = () => {
             const existingCartItem=prevCartItems.find((cartItem)=>cartItem._id===menuItem._id);
             let updatedCartItem;
             if(existingCartItem){
-                updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===menuItem._id?{...cartItem,quantity:cartItem.quantity++}:cartItem)
+                updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===menuItem._id?{...cartItem,quantity:cartItem.quantity+1}:cartItem)
                 console.log("clicked");
             }else{
                 updatedCartItem=[...prevCartItems,{_id:menuItem._id,name:menuItem.name,price:menuItem.price,quantity:1}]
@@ -45,7 +45,7 @@ const DetailsPage = () => {
         setCartItems((prevCartItems)=>{
             let updatedCartItem;
             if(deleteCartItem.quantity>0){
-                updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===deleteCartItem._id?{...cartItem,quantity:cartItem.quantity--}:cartItem)
+                updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===deleteCartItem._id?{...cartItem,quantity:cartItem.quantity-1}:cartItem)
                 console.log("clicked");
             }else{
                 updatedCartItem=prevCartItems.filter((cartItem)=>cartItem._id!==deleteCartItem._id)
