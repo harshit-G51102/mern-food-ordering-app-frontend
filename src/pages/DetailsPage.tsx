@@ -9,6 +9,8 @@ import { MenuItem } from "@/types";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useCreateCheckoutSession } from "@/api/OrderApi";
+import { toast } from "sonner";
 
 export type CartItem={
     _id:string;
@@ -19,6 +21,7 @@ export type CartItem={
 
 
 const DetailsPage = () => {
+    const {createCheckoutSession,isLoading:isCheckoutLoading}=useCreateCheckoutSession();
     const {restaurantId}=useParams();
     const [cartItems,setCartItems]=useState<CartItem[]>(()=>{
         const storedCartItems=sessionStorage.getItem(`cartItems-${restaurantId}`);
@@ -31,10 +34,10 @@ const DetailsPage = () => {
             let updatedCartItem;
             if(existingCartItem){
                 updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===menuItem._id?{...cartItem,quantity:cartItem.quantity+1}:cartItem)
-                console.log("clicked");
+                
             }else{
                 updatedCartItem=[...prevCartItems,{_id:menuItem._id,name:menuItem.name,price:menuItem.price,quantity:1}]
-                console.log("clicked");
+                
             }
             sessionStorage.setItem(`cartItems-${restaurantId}`,JSON.stringify(updatedCartItem));
             return updatedCartItem;
@@ -46,10 +49,10 @@ const DetailsPage = () => {
             let updatedCartItem;
             if(deleteCartItem.quantity>1){
                 updatedCartItem=prevCartItems.map((cartItem)=>cartItem._id===deleteCartItem._id?{...cartItem,quantity:cartItem.quantity-1}:cartItem)
-                console.log("clicked");
+                
             }else{
                 updatedCartItem=prevCartItems.filter((cartItem)=>cartItem._id!==deleteCartItem._id)
-                console.log("clicked");
+            
             }
             sessionStorage.setItem(`cartItems-${restaurantId}`,JSON.stringify(updatedCartItem));
             return updatedCartItem;
@@ -57,8 +60,29 @@ const DetailsPage = () => {
         })
     }
 
-    const onCheckout=(userFormData:UserFormData)=>{
-        console.log("userformData",userFormData);
+    const onCheckout= async (userFormData:UserFormData)=>{
+        if (!restaurant) {
+            return;
+        }
+    
+        const checkoutData = {
+            cartItems: cartItems.map((cartItem) => ({
+                menuItemId: cartItem._id,
+                name: cartItem.name,
+                quantity: cartItem.quantity.toString(),
+            })),
+            deliverydetails: {
+                name: userFormData.name,
+                email: userFormData.email as string,
+                addressLine: userFormData.addressLine,
+                city: userFormData.city
+            },
+            restaurantId: restaurant._id,
+        };
+    
+        const data = await createCheckoutSession(checkoutData);
+        console.log("Response Data:", data);
+        toast.success("order sent successfully");
     }
 
     if(isLoading||!restaurant){
@@ -82,7 +106,7 @@ const DetailsPage = () => {
                     <Card>
                         <OrderSummary cartItems={cartItems} restaurant={restaurant} deleteFromCart={deleteFromCart}></OrderSummary>
                         <CardFooter>
-                            <CheckOutButton disabled={cartItems.length===0} onCheckout={onCheckout}></CheckOutButton>
+                            <CheckOutButton disabled={cartItems.length===0} isLoading={isCheckoutLoading} onCheckout={onCheckout}></CheckOutButton>
                         </CardFooter>
                     </Card>
 

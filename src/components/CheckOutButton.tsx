@@ -9,9 +9,10 @@ import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 type Props={
     onCheckout:(userFormData:UserFormData)=>void;
     disabled:boolean;
+    isLoading:boolean
 }
 
-const CheckOutButton = ({onCheckout,disabled}:Props) => {
+const CheckOutButton = ({onCheckout,disabled,isLoading}:Props) => {
   const {isAuthenticated,isLoading:isAuthLoading,loginWithRedirect}=useAuth0();
   const {pathname}=useLocation();
   const {currentUser,isLoading:isGetuserLoading}=useGetMyUser();
@@ -27,7 +28,7 @@ const CheckOutButton = ({onCheckout,disabled}:Props) => {
         <Button className="bg-orange-500 flex-1" onClick={onLogin}>Login to check out</Button>
     )
   }
-  if(isAuthLoading||!currentUser){
+  if(isAuthLoading||!currentUser||isLoading){
     return <LoadingButton></LoadingButton>
   }
   return (
