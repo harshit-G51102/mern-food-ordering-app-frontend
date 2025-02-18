@@ -63,7 +63,7 @@ const SearchPage = () => {
     }))
   }
   if (isLoading) {
-    return <span>Loading</span>
+    return <span>Loading(it may take some time as it is deployed on render)</span>
   }
   if (!results?.data || !city) {
     return <span>no results found</span>
