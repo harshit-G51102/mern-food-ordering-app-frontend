@@ -15,6 +15,7 @@ const HomePage=()=>{
                     Tuck into a takeway today
                 </h1>
                 <span className="text-xl">Food is just a click away</span>
+                <span className="text-sm">Search bareilly or manchester to get results</span>
                 <SearchBar placeholder="search by city or town" onSubmit={handleSearchSubmit}></SearchBar>
             </div>
             <div className="grid md:grid-cols-2 gap-5">
